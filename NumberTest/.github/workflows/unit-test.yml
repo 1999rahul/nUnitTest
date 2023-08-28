@@ -1,0 +1,27 @@
+﻿name: NUnit Tests
+
+on:
+  push:
+    branches:
+      - main 
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '3.1'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Run NUnit tests
+        run: dotnet test --no-restore
